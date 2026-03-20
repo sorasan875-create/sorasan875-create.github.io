@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>そらのバトルゲーム</title>
+
+  <style>
+    body {
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>⚔️ モンスター討伐</h1>
+
+  <p>❤️ プレイヤーHP: <span id="playerHP">100</span></p>
+  <p>👾 敵HP: <span id="enemyHP">100</span></p>
+  <p>⭐ レベル: <span id="level">1</span></p>
+
+  <button onclick="attack()">攻撃！</button>
+
+  <p id="message"></p>
+
+  <script>
+    let playerHP = 100;
+    let enemyHP = 100;
+    let level = 1;
+
+    function attack() {
+      if (playerHP <= 0) return;
+
+      // プレイヤー攻撃
+      let damage = Math.floor(Math.random() * 20) + 5;
+      enemyHP -= damage;
+
+      // 敵の攻撃
+      let enemyDamage = Math.floor(Math.random() * 15) + 3;
+      playerHP -= enemyDamage;
+
+      // 表示更新
+      document.getElementById("enemyHP").innerText = enemyHP;
+      document.getElementById("playerHP").innerText = playerHP;
+
+      // 勝ち
+      if (enemyHP <= 0) {
+        level++;
+        enemyHP = 100 + level * 20;
+        document.getElementById("level").innerText = level;
+        document.getElementById("message").innerText = "🎉 勝利！レベルアップ！";
+      }
+      // 負け
+      else if (playerHP <= 0) {
+        document.getElementById("message").innerText = "💀 ゲームオーバー...";
+      }
+      // 通常
+      else {
+        document.getElementById("message").innerText =
+          "⚔️ " + damage + "ダメージ！ / 敵の攻撃 -" + enemyDamage;
+      }
+    }
+  </script>
+
+</body>
+</html>
